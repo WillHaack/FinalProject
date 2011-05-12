@@ -2,10 +2,11 @@
 public class Board {
 
     private int[][] gameboard; //0 is empty, 1 is x, 2 is 0
-    
+    private boolean isXTurn;
     /* new 3 x 3 tictactoe board represented as an int[][] all empty */
     public Board() {
         gameboard = new int[3][3];
+        isXTurn = true;
     }
     /* @param x = xcor y = ycor n = 1 if x n = 2 if O
      * @return returns whether or not it can move
@@ -13,9 +14,18 @@ public class Board {
     public boolean makeMove(int x, int y, int n) {
         if (gameboard[x][y] == 0) {
             gameboard[x][y] = n;
+            switchTurn();
             return true;
         }
         return false;
+    }
+    
+    public boolean getTurn(){
+        return isXTurn;
+    }
+    
+    public void switchTurn(){
+        isXTurn = !isXTurn;
     }
     /*prints board to screen*/
     public void printBoard() {
