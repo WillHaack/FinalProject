@@ -18,6 +18,10 @@ public class Board {
             myBot.makeNextMove();
     }
     
+    public int[][] getIntArray(){
+        return gameboard;
+    }
+    
     /* @param x = xcor y = ycor n = 1 if x n = 2 if O
      * @return returns whether or not it can move
      */
