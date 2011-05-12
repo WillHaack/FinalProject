@@ -7,8 +7,10 @@ public class GameBoard extends Frame{
   private Ellipse check;
   private Xpiece test1;
   private Opiece test2;
+  private Board infoBoard;
   
   public GameBoard(){
+      infoBoard = new Board();
     test1 = new Xpiece(425,175);
     test2 = new Opiece(275,25);
     _top = new Line();
