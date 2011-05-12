@@ -4,7 +4,6 @@ import java.awt.Color;
 public class GameBoard extends Frame{
   
   private Line _top, _bottom, _left, _right;
-  private Ellipse check;
   private Board infoBoard;
   private Sensor s1,s2,s3,s4,s5,s6,s7,s8,s9;
   
