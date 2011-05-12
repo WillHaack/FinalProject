@@ -2,36 +2,37 @@ import wheels.users.*;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 
-public class Sensor{
+public class Sensor extends Rectangle{
  
   private Board _board;
-  private Rectangle _body;
   private int _x, _y;
   private int bX, bY;
   
   public Sensor(Board bor, int x, int y, int a, int b){
-    bX = a;
-    bY = b;
-    _x = x;
-    _y = y;
+    super(Color.red);
+    bX = a; //gives actual xcor
+    bY = b; //gives actual ycor
+    _x = x; //gives frame xcor
+    _y = y; //gives frame ycor
     _board = bor;
-    _body = new Rectangle(Color.white);
-    _body.setSize(148,148);
-    _body.setLocation(x+1,y+1);
+    setSize(148,148);
+    setLocation(x+1,y+1);
   }
   
-  public void mouseClicked (MouseEvent e){
-    _body.setColor(Color.blue);
-    /*if (_board.getTurn() && _board.canMove(bX,bY)){
+  public void mousePressed (MouseEvent e){
+    setColor(Color.blue);
+    if (_board.getTurn() && _board.canMove(bX,bY)){
         Xpiece X = new Xpiece(_x,_y);
         _board.makeMove(bX,bY,1);
-        _body.setColor(Color.blue);
+        setColor(Color.blue);
     }
       else if(_board.canMove(bX,bY)){ 
         Opiece O = new Opiece(_x,_y);
         _board.makeMove(bX,bY,2);
-        _body.setColor(Color.red);
-      }*/
+        setColor(Color.red);
+      }
     }
+  
+  public void mouseRealesed(MouseEvent e){};
   
 }
