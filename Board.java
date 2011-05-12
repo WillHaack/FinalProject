@@ -1,3 +1,15 @@
+<<<<<<< HEAD
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author Will
+ */
+=======
+>>>>>>> 3524a3861e4b88eb22f79085f8ab161e23bd7d63
 public class Board {
 
     private int[][] gameboard; //0 is empty, 1 is x, 2 is 0
