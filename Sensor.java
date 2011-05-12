@@ -8,11 +8,13 @@ public class Sensor extends Rectangle {
     private Board _board;
     private int _x, _y;
     private int bX, bY;
+    private GameBoard displayBoard;
 
-    public Sensor(Board bor, int x, int y, int a, int b) {
+    public Sensor(Board bor, int x, int y, int a, int b, GameBoard display) {
         super(Color.white);
-        bX = a; //gives actual xcor
-        bY = b; //gives actual ycor
+        displayBoard = display;
+        bX = a; //gives infoboard xcor
+        bY = b; //gives infoboard ycor
         _x = x; //gives frame xcor
         _y = y; //gives frame ycor
         _board = bor;
@@ -21,9 +23,14 @@ public class Sensor extends Rectangle {
     }
 
     public void mousePressed(MouseEvent e) {
+        if (_board.canMove(bX, bY)){
         setColor(Color.blue);
         _board.makeMove(bX, bY);
-        addPiece();
+        _board.declareWinner();
+        _board.makeBotMove();
+        _board.declareWinner();
+        displayBoard.display();
+        }
     }
 
     public void addPiece() {
@@ -35,5 +42,4 @@ public class Sensor extends Rectangle {
                 setColor(Color.red);
             }
         }
-    
 }

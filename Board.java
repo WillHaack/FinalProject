@@ -1,3 +1,5 @@
+import wheels.users.*; 
+import java.awt.Color;
 
 public class Board {
 
@@ -68,10 +70,10 @@ public class Board {
         }
     }
     /*
-     * @return 0 if no winner 1 if x is winner 2 if O is winner
+     * declares a winner if there is one.
      */
 
-    public int declareWinner() {
+    public void declareWinner() {
         int ans = 0;
         if (diagonalWinner() || row2Winner() || vert2Winner())
             ans = gameboard[1][1];
@@ -79,7 +81,10 @@ public class Board {
             ans = gameboard[0][0];
         else if (row3Winner() || vert3Winner())
             ans = gameboard[2][2];
-        return ans;
+        if (ans == 1)
+            new ConversationBubble("X WINS!");
+        else if (ans == 2)
+            new ConversationBubble("O WINS!");
     }
     /* @return true if there is a winner on either diagonal*/
     private boolean diagonalWinner(){
