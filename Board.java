@@ -4,6 +4,7 @@ public class Board {
     private int[][] gameboard; //0 is empty, 1 is x, 2 is 0
     private boolean isXTurn;
     /* new 3 x 3 tictactoe board represented as an int[][] all empty */
+
     public Board() {
         gameboard = new int[3][3];
         isXTurn = true;
@@ -11,10 +12,14 @@ public class Board {
     /* @param x = xcor y = ycor n = 1 if x n = 2 if O
      * @return returns whether or not it can move
      */
-    public boolean makeMove(int x, int y, int n) {
+
+    public boolean makeMove(int x, int y) {
         if (gameboard[x][y] == 0) {
-            gameboard[x][y] = n;
-            switchTurn();
+            if (isXTurn) {
+                gameboard[x][y] = 1;
+            } else {
+                gameboard[x][y] = 2;
+            }
             return true;
         }
         return false;

@@ -1,19 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package finalproject;
-
-/**
- *
- * @author Will
- */
 public class FinalProject {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        GameBoard mygame = new GameBoard();
+        DumbBot myBot = new DumbBot(mygame.getBoard(), 2, mygame);
+     for (int i = 0; i < 8; i++)
+         myBot.makeNextMove();
     }
 }

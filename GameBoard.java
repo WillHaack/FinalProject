@@ -40,6 +40,35 @@ public class GameBoard extends Frame{
       return infoBoard;
   }
   
+  public void addPiece(int x, int y){
+      if (x == 0 && y == 0)
+          s1.addPiece();
+      if (x == 0 && y == 1)
+          s2.addPiece();
+      if (x == 0 && y == 2)
+          s3.addPiece();
+      if (x == 1 && y == 0)
+          s4.addPiece();
+      if (x == 1 && y == 1)
+          s5.addPiece();
+      if (x == 1 && y == 2)
+          s6.addPiece();
+      if (x == 2 && y == 0)
+          s7.addPiece();
+      if (x == 2 && y == 1)
+          s8.addPiece();
+      if (x == 2 && y == 2)
+          s9.addPiece();
+  }
+  
+  public void display(){
+      for (int r = 0; r < 3; r++){
+          for (int c = 0; c < 3; c++){
+              addPiece(r, c);
+          }
+      }
+  }
+  
   public static void main(String[]args){
     GameBoard app = new GameBoard();
   }

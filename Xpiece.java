@@ -1,7 +1,7 @@
 import wheels.users.*; 
 import java.awt.Color;
 
-public class Xpiece{
+public class Xpiece implements gamepiece{
   
   private Line first, second;
   

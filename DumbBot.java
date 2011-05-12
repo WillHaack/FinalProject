@@ -2,10 +2,12 @@
 public class DumbBot implements TicTacToeBot{
     int next_move_xcor, next_move_ycor, team;
     Board gameBoard;
+    GameBoard displayBoard;
     
     /* makes a new ai with access to the gameboard*/
-    public DumbBot(Board newboard, int n){
+    public DumbBot(Board newboard, int n, GameBoard display){
         gameBoard = newboard;
+        displayBoard = display;
         team = n;
     }
     
@@ -21,7 +23,9 @@ public class DumbBot implements TicTacToeBot{
     /* calls getNextMove then makes the move*/
     public void makeNextMove(){
         getNextMove();
-        gameBoard.makeMove(next_move_xcor, next_move_ycor, team);
+        gameBoard.makeMove(next_move_xcor, next_move_ycor);
+        displayBoard.display();
     }
+    
     
 }
