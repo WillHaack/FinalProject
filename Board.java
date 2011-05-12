@@ -1,15 +1,4 @@
-<<<<<<< HEAD
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/**
- *
- * @author Will
- */
-=======
->>>>>>> 3524a3861e4b88eb22f79085f8ab161e23bd7d63
 public class Board {
 
     private int[][] gameboard; //0 is empty, 1 is x, 2 is 0
@@ -95,7 +84,7 @@ public class Board {
     public boolean canMove(int x, int y) {
         return gameboard[x][y] == 0;
     }
-    
+    /*clears the board*/
     public void clearBoard(){
         for (int r = 0; r < 3; r++){
             for (int c = 0; c < 3; c++){
@@ -103,4 +92,13 @@ public class Board {
             }
         }
     }
+    
+    /*
+     * @param x = xcor y = ycor
+     * @return returns the num at (x,y) 0 if blank 1 if x 2 if O.
+     */
+    public int get(int x, int y){
+        return gameboard[x][y];
+    }
+    
 }
