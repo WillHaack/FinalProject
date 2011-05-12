@@ -3,16 +3,22 @@ public class Board {
 
     private int[][] gameboard; //0 is empty, 1 is x, 2 is 0
     private boolean isXTurn;
+    private DumbBot myBot;
     /* new 3 x 3 tictactoe board represented as an int[][] all empty */
 
     public Board() {
         gameboard = new int[3][3];
         isXTurn = true;
+        myBot = new DumbBot(this, 2);
     }
+    
+    public void makeBotMove(){
+            myBot.makeNextMove();
+    }
+    
     /* @param x = xcor y = ycor n = 1 if x n = 2 if O
      * @return returns whether or not it can move
      */
-
     public boolean makeMove(int x, int y) {
         if (gameboard[x][y] == 0) {
             if (isXTurn) {
@@ -20,15 +26,29 @@ public class Board {
             } else {
                 gameboard[x][y] = 2;
             }
+            switchTurn();
             return true;
         }
         return false;
     }
     
+     /* returns true if the board is  filled*/
+    public boolean isFilled(){
+        for (int r = 0; r < 3; r++){
+            for (int c = 0; c < 3; c++){
+                if (gameboard[r][c] == 0)
+                    return false;
+            }
+        }
+        return true;
+    }
+    
+    /*returns true if it's x's turn false if it's o's*/
     public boolean getTurn(){
         return isXTurn;
     }
     
+    /* switches turns*/
     public void switchTurn(){
         isXTurn = !isXTurn;
     }
