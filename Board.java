@@ -5,13 +5,13 @@ public class Board {
 
     private int[][] gameboard; //0 is empty, 1 is x, 2 is 0
     private boolean isXTurn;
-    private DumbBot myBot;
+    private TicTacToeBot myBot;
     /* new 3 x 3 tictactoe board represented as an int[][] all empty */
 
     public Board() {
         gameboard = new int[3][3];
         isXTurn = true;
-        myBot = new DumbBot(this, 2);
+        myBot = new GeniusBot(this, 2);
     }
     
     public void makeBotMove(){
@@ -19,7 +19,13 @@ public class Board {
     }
     
     public int[][] getIntArray(){
-        return gameboard;
+        int[][] temp = new int[3][3];
+        for (int r = 0; r < 3; r++){
+            for (int c = 0 ; c < 3; c++){
+                temp[r][c] = gameboard[r][c];
+            }
+        }
+        return temp;
     }
     
     /* @param x = xcor y = ycor n = 1 if x n = 2 if O

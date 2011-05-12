@@ -38,8 +38,21 @@ public class GeniusBot implements TicTacToeBot{
         if (isCenter(x, y))
             ans += 100;
         if (isCorner(x, y))
-            ans += 25;
-        return ans + (int)(Math.random() * 10);
+            ans += 10;
+        if (catchCornerTrap(x, y))
+            ans += 50;
+        return ans + (int)(Math.random() * 5); //same valued moves don't get repeated.
+    }
+    
+    private boolean catchCornerTrap(int x,int y){
+        boolean isSide = !isCorner(x, y) && !isCenter(x, y);
+        int opp_team = 1;
+        if (team == 1)
+            opp_team = 2;
+        int[][] tempinfoBoard = infoBoard.getIntArray();
+        boolean gotCorners = (tempinfoBoard[0][0] == opp_team && tempinfoBoard[2][2] == opp_team) || 
+                           (tempinfoBoard[2][0] == opp_team && tempinfoBoard[0][2] == opp_team);
+        return isSide && gotCorners;
     }
     
     private boolean isCenter(int x,int y){
