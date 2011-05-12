@@ -10,7 +10,7 @@ public class GameBoard extends Frame{
   private Board infoBoard;
   
   public GameBoard(){
-      infoBoard = new Board();
+    infoBoard = new Board();
     test1 = new Xpiece(425,175);
     test2 = new Opiece(275,25);
     _top = new Line();
@@ -29,6 +29,10 @@ public class GameBoard extends Frame{
     _bottom.setPoints(125,325,575,325);
     _left.setPoints(275,25,275,475);
     _right.setPoints(425,25,425,475);
+  }
+  
+  public Board getBoard(){
+      return infoBoard;
   }
   
   public static void main(String[]args){
