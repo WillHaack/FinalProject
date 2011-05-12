@@ -12,4 +12,6 @@ public class Opiece{
     piece.setSize(130,130);
     piece.setLocation(x+10,y+10);
   }
+  
+  
 }
