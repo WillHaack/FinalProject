@@ -37,10 +37,10 @@ public class InvincibleBot implements TicTacToeBot{
             ans += 250;
         if (isCenter(x, y))
             ans += 100;
-        if (isCorner(x, y))
-            ans += 10;
         if (catchCornerTrap(x, y))
             ans += 50;
+        if (isCorner(x, y))
+            ans += 10;
         return ans + (int)(Math.random() * 5); //same valued moves don't get repeated.
     }
     
