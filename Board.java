@@ -11,7 +11,7 @@ public class Board {
     public Board() {
         gameboard = new int[3][3];
         isXTurn = true;
-        myBot = new InvincibleBot(this, 2);
+        myBot = new SpecialBot(this, 2);
     }
     
     public void makeBotMove(){
