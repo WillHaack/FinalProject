@@ -36,10 +36,8 @@ public class Sensor extends Rectangle {
     public void addPiece() {
             if (_board.get(bX, bY) == 1) {
                 new Xpiece(_x, _y);
-                setColor(Color.blue);
             } else if (_board.get(bX, bY) == 2){
                 new Opiece(_x, _y);
-                setColor(Color.red);
             }
         }
 }
