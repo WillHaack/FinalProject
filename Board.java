@@ -1,29 +1,66 @@
+import wheels.users.*; 
+import java.awt.Color;
 
 public class Board {
 
     private int[][] gameboard; //0 is empty, 1 is x, 2 is 0
     private boolean isXTurn;
+    private TicTacToeBot myBot;
     /* new 3 x 3 tictactoe board represented as an int[][] all empty */
+
     public Board() {
         gameboard = new int[3][3];
         isXTurn = true;
+        myBot = new InvincibleBot(this, 2);
     }
+    
+    public void makeBotMove(){
+            myBot.makeNextMove();
+    }
+    
+    public int[][] getIntArray(){
+        int[][] temp = new int[3][3];
+        for (int r = 0; r < 3; r++){
+            for (int c = 0 ; c < 3; c++){
+                temp[r][c] = gameboard[r][c];
+            }
+        }
+        return temp;
+    }
+    
     /* @param x = xcor y = ycor n = 1 if x n = 2 if O
      * @return returns whether or not it can move
      */
-    public boolean makeMove(int x, int y, int n) {
+    public boolean makeMove(int x, int y) {
         if (gameboard[x][y] == 0) {
-            gameboard[x][y] = n;
+            if (isXTurn) {
+                gameboard[x][y] = 1;
+            } else {
+                gameboard[x][y] = 2;
+            }
             switchTurn();
             return true;
         }
         return false;
     }
     
+     /* returns true if the board is  filled*/
+    public boolean isFilled(){
+        for (int r = 0; r < 3; r++){
+            for (int c = 0; c < 3; c++){
+                if (gameboard[r][c] == 0)
+                    return false;
+            }
+        }
+        return true;
+    }
+    
+    /*returns true if it's x's turn false if it's o's*/
     public boolean getTurn(){
         return isXTurn;
     }
     
+    /* switches turns*/
     public void switchTurn(){
         isXTurn = !isXTurn;
     }
@@ -43,10 +80,10 @@ public class Board {
         }
     }
     /*
-     * @return 0 if no winner 1 if x is winner 2 if O is winner
+     * declares a winner if there is one.
      */
 
-    public int declareWinner() {
+    public void declareWinner() {
         int ans = 0;
         if (diagonalWinner() || row2Winner() || vert2Winner())
             ans = gameboard[1][1];
@@ -54,7 +91,10 @@ public class Board {
             ans = gameboard[0][0];
         else if (row3Winner() || vert3Winner())
             ans = gameboard[2][2];
-        return ans;
+        if (ans == 1)
+            new ConversationBubble("X WINS!");
+        else if (ans == 2)
+            new ConversationBubble("O WINS!");
     }
     /* @return true if there is a winner on either diagonal*/
     private boolean diagonalWinner(){

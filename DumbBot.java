@@ -20,8 +20,10 @@ public class DumbBot implements TicTacToeBot{
     }
     /* calls getNextMove then makes the move*/
     public void makeNextMove(){
+        if (!gameBoard.isFilled()){
         getNextMove();
-        gameBoard.makeMove(next_move_xcor, next_move_ycor, team);
+        gameBoard.makeMove(next_move_xcor, next_move_ycor);
+        }
     }
     
 }

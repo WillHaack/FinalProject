@@ -1,7 +1,7 @@
 import wheels.users.*; 
 import java.awt.Color;
 
-public class Opiece{
+public class Opiece implements gamepiece{
   
   private Ellipse piece;
   

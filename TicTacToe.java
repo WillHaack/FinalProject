@@ -1,22 +1,20 @@
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
+<<<<<<< HEAD
  *
+=======
+ */
+>>>>>>> 2996d70cea70e9113b3cc3efb728ec6ebb6fd7bf
 
 /**
  *
  * @author Will
  */
 public class TicTacToe {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        Board gameboard = new Board();
-        gameboard.makeMove(2, 1, 1);
-        gameboard.makeMove(1, 1, 1);
-        gameboard.makeMove(0, 1, 1);
-        gameboard.printBoard();// TODO code application logic here
+    
+    public TicTacToe(){
+        GameBoard mygame = new GameBoard();
     }
+    
 }
