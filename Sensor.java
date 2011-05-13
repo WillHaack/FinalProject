@@ -24,7 +24,6 @@ public class Sensor extends Rectangle {
 
     public void mousePressed(MouseEvent e) {
         if (_board.canMove(bX, bY)){
-        setColor(Color.blue);
         _board.makeMove(bX, bY);
         _board.declareWinner();
         _board.makeBotMove();
