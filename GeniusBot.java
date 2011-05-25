@@ -8,7 +8,27 @@ public class GeniusBot implements TicTacToeBot{
         infoBoard = newboard;
         team = n;
     }
-    
+    /* generates a list of possible moves */
+public int[][] getPossibleMoves(){
+    int num_moves = 0;
+    for (int r = 0; r < 3; r++){
+	for (int c = 0; c < 3; c++){
+	    if (infoBoard.canMove(r,c))
+		num_moves++;
+	}
+    }
+    int[][] ans = new int[num_moves][2];
+    int temp = 0;
+    for (int r = 0; r < 3; r++){
+	for (int c = 0; c < 3; c++){
+	    if (infoBoard.canMove(r, c)){
+		num_moves[temp][0] = r;
+		num_moves[temp++][1] = c;
+	    }
+	}
+    }
+    return ans;
+}
     /*gets best possible move*/
     public void getNextMove(){
         int[][] potential_moves = new int[3][3]; //the value of each move is stored in the int array.
@@ -128,5 +148,40 @@ public class GeniusBot implements TicTacToeBot{
         infoBoard.makeMove(next_move_xcor, next_move_ycor);
         }
     }
+
+/* generates a list of possible moves */
+public int[][] getPossibleMoves(int[][] tempBoard){
+    int num_moves = 0;
+    for (int r = 0; r < 3; r++){
+	for (int c = 0; c < 3; c++){
+	    if (tempBoard[r][c] == 0)
+		num_moves++;
+	}
+    }
+    //returns an int[] rcor, ccor, then value
+    public int[] nextBestMove(int[][] moves, int player, int[][] tempBoard){
+	int ans = -;
+	for (int[] next_move : moves){
+	    int newTempBoard = tempBoard;
+	    newTempBoard[next_move[0]][next_move[1]] = player;
+	    int[][] next_possible_moves = getPossibleMoves(tempBoard);
+	    int other_player = (player % 2) + 1;
+	    if (nextBestMove(next_possible_moves, other_player, newTempBoard)[2] < ans)
+
+    int[][] ans = new int[num_moves][2];
+    int temp = 0;
+    for (int r = 0; r < 3; r++){
+	for (int c = 0; c < 3; c++){
+	    if (infoBoard.canMove(r, c)){
+		num_moves[temp][0] = r;
+		num_moves[temp++][1] = c;
+	    }
+	}
+    }
+    return ans;
+}
+
+
+		
     
 }
