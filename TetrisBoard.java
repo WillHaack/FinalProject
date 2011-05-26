@@ -96,12 +96,8 @@ public class TetrisBoard extends Frame{
     h19.setPoints(235,457,465,457);    
     TetrisDriver x = new TetrisDriver();
     x.addPiece();
-    x.print();
-    System.out.println();
-    //xx.display();
     //Wait.wait(500);
-    x.move();
-    x.print();
+    x.movePiece();
     x.display();
   }
   

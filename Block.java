@@ -29,6 +29,10 @@ public class Block{
     isFalling = true;
   }
   
+  public int getPart(){
+    return part;
+  }
+  
   public String getType(){
     return type;
   }

@@ -1,14 +1,16 @@
 import java.awt.Color;
 import wheels.users.*;
+import java.util.*;
 
 public class TetrisDriver{
 
     private Block[][] board;
     private Block b1, b2, b3, b4;
-    
+    private Block[] piece;
     
     public TetrisDriver(){
       board = new Block[20][10]; 
+      piece = new Block[4];
       b1 = null;
       b2 = null;
       b3 = null;
@@ -76,19 +78,37 @@ public class TetrisDriver{
         board[1][4] = new Block(1,4,"Z",3);
         board[1][5] = new Block(1,5,"Z",4);
       }
+      int at = 0;
+      for (int i = 0; i < 2; i++){
+        for (int j = 3; j < 7; j++){
+          if (board[i][j] != null){
+            piece[at] = board[i][j];
+            at++;
+          }
+        }
+      }
     }
     
-    public void move(){
-      for (int i = 19; i >= 0; i--){
-        for (int j = 9; j >= 0; j--){
-          if (board[i][j] != null && board[i][j].isFalling()){
-            if (board[i+1][j] != null && i != 19){
-            board[i+1][j] = board[i][j];
-            board[i][j] = null;
-            }
-            else
-              board[i][j].stop();
-          }
+    public void movePiece(){
+      boolean canMove = true;
+      for (int i = 0; i < 4; i++){
+        if (!piece[0].canMove()){
+          canMove = false;
+          break;
+        }
+      }
+      if (canMove){
+        for (int i = 0; i < 4; i++){
+          String s = piece[i].getType();
+          int x = piece[i].getPart();
+          Block cur = piece[i];
+          board[cur.getRow() + 1][cur.getCol()] = new Block(cur.getRow() + 1, cur.getCol(),s,x);
+          board[cur.getRow()][cur.getCol()] = null;
+        }
+      }
+      else{
+        for (int i = 0; i < 4; i++){
+          piece[i].stop();
         }
       }
     }
