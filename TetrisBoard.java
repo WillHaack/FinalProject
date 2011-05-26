@@ -101,6 +101,10 @@ public class TetrisBoard extends Frame{
     //xx.display();
     //Wait.wait(500);
     x.move();
+    x.move();
+    x.move();
+    x.move();
+    x.move();
     x.print();
     x.display();
   }
