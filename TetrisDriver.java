@@ -43,10 +43,10 @@ public class TetrisDriver{
         board[0][6] = new Block(0,6,"I",4);
       }
       else if (type == 1){
-        board[0][3] = new Block(0,3,"J",1);
         board[1][3] = new Block(1,3,"J",2);
         board[1][4] = new Block(1,4,"J",3);
         board[1][5] = new Block(1,5,"J",4);
+        board[0][3] = new Block(0,3,"J",1);
       }
       else if (type == 2){
         board[1][3] = new Block(1,3,"L",1);
@@ -55,10 +55,10 @@ public class TetrisDriver{
         board[0][5] = new Block(0,5,"L",4);
       }
       else if (type == 3){
-        board[0][4] = new Block(0,4,"O",1);
-        board[0][5] = new Block(0,5,"O",2);
         board[1][4] = new Block(1,4,"O",3);
         board[1][5] = new Block(1,5,"O",4);
+        board[0][4] = new Block(0,4,"O",1);
+        board[0][5] = new Block(0,5,"O",2);
       }
       else if (type == 4){
         board[1][3] = new Block(1,3,"S",1);
@@ -69,14 +69,14 @@ public class TetrisDriver{
       else if (type == 5){
         board[1][3] = new Block(1,3,"T",1);
         board[1][4] = new Block(1,4,"T",2);
-        board[0][4] = new Block(0,4,"T",3);
         board[1][5] = new Block(1,5,"T",4);
+        board[0][4] = new Block(0,4,"T",3);
       }
       else{
-        board[0][3] = new Block(0,3,"Z",1);
-        board[0][4] = new Block(0,4,"Z",2);
         board[1][4] = new Block(1,4,"Z",3);
         board[1][5] = new Block(1,5,"Z",4);
+        board[0][3] = new Block(0,3,"Z",1);
+        board[0][4] = new Block(0,4,"Z",2);
       }
       int at = 0;
       for (int i = 0; i < 2; i++){
