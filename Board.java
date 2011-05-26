@@ -11,7 +11,7 @@ public class Board {
     public Board() {
         gameboard = new int[3][3];
         isXTurn = true;
-        myBot = new SpecialBot(this, 2);
+        myBot = new GeniusBot(this, 2);
     }
     
     public void makeBotMove(){

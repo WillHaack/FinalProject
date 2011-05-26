@@ -1,6 +1,6 @@
 /* the genius bot always wins or ties */
 public class GeniusBot implements TicTacToeBot{
-    int next_move_xcor, next_move_ycor, team;
+    int next_move_xcor, next_move_ycor, team, numcalcs;
     Board infoBoard;
     
     /* makes a new ai with access to the gameboard*/
@@ -8,43 +8,12 @@ public class GeniusBot implements TicTacToeBot{
         infoBoard = newboard;
         team = n;
     }
-    /* generates a list of possible moves */
-public int[][] getPossibleMoves(){
-    int num_moves = 0;
-    for (int r = 0; r < 3; r++){
-	for (int c = 0; c < 3; c++){
-	    if (infoBoard.canMove(r,c))
-		num_moves++;
-	}
-    }
-    int[][] ans = new int[num_moves][2];
-    int temp = 0;
-    for (int r = 0; r < 3; r++){
-	for (int c = 0; c < 3; c++){
-	    if (infoBoard.canMove(r, c)){
-		num_moves[temp][0] = r;
-		num_moves[temp++][1] = c;
-	    }
-	}
-    }
-    return ans;
-}
+    
     /*gets best possible move*/
     public void getNextMove(){
-        int[][] potential_moves = new int[3][3]; //the value of each move is stored in the int array.
-        for (int r = 0; r < 3; r++){
-            for (int c = 0; c < 3; c++){
-                potential_moves[r][c] = evaluate(r, c);
-            }
-        }
-        for (int r = 0; r < 3; r++){
-            for (int c = 0; c < 3; c++){
-                if (potential_moves[next_move_xcor][next_move_ycor] < potential_moves[r][c]){
-                    next_move_xcor = r;
-                    next_move_ycor = c;
-                }
-            }
-        }
+     int[] next_move_array = nextBestMove();
+     next_move_xcor = next_move_array[0];
+     next_move_ycor = next_move_array[1];
     }
     
     public int evaluate(int x, int y){
@@ -91,6 +60,19 @@ public int[][] getPossibleMoves(){
     private boolean isWinner(int x,int y){
         int[][] tempinfoBoard = infoBoard.getIntArray();
         tempinfoBoard[x][y] = team;
+        return diagonalWinner(tempinfoBoard) ||
+               row1Winner(tempinfoBoard) || row2Winner(tempinfoBoard) || row3Winner(tempinfoBoard) || 
+                vert1Winner(tempinfoBoard) || vert2Winner(tempinfoBoard) || vert3Winner(tempinfoBoard);
+    }
+
+    private boolean isWinner(int x,int y, int[][] tempinfoBoard){
+        tempinfoBoard[x][y] = team;
+        return diagonalWinner(tempinfoBoard) ||
+               row1Winner(tempinfoBoard) || row2Winner(tempinfoBoard) || row3Winner(tempinfoBoard) || 
+                vert1Winner(tempinfoBoard) || vert2Winner(tempinfoBoard) || vert3Winner(tempinfoBoard);
+    }
+    
+     private boolean isWinner(int[][] tempinfoBoard, int player){
         return diagonalWinner(tempinfoBoard) ||
                row1Winner(tempinfoBoard) || row2Winner(tempinfoBoard) || row3Winner(tempinfoBoard) || 
                 vert1Winner(tempinfoBoard) || vert2Winner(tempinfoBoard) || vert3Winner(tempinfoBoard);
@@ -150,36 +132,89 @@ public int[][] getPossibleMoves(){
     }
 
 /* generates a list of possible moves */
-public int[][] getPossibleMoves(int[][] tempBoard){
-    int num_moves = 0;
-    for (int r = 0; r < 3; r++){
-	for (int c = 0; c < 3; c++){
-	    if (tempBoard[r][c] == 0)
-		num_moves++;
-	}
+    public int[][] getPossibleMoves(int[][] tempInfoBoard) {
+        int num_moves = 0;
+        for (int r = 0; r < 3; r++) {
+            for (int c = 0; c < 3; c++) {
+                if (tempInfoBoard[r][c] == 0) {
+                    num_moves++;
+                }
+            }
+        }
+        int[][] ans = new int[num_moves][2];
+        int temp = 0;
+        for (int r = 0; r < 3; r++) {
+            for (int c = 0; c < 3; c++) {
+                if (tempInfoBoard[r][c] == 0) {
+                    ans[temp][0] = r;
+                    ans[temp++][1] = c;
+                }
+            }
+        }
+        return ans;
     }
-    //returns an int[] rcor, ccor, then value
-    public int[] nextBestMove(int[][] moves, int player, int[][] tempBoard){
-	int ans = -;
-	for (int[] next_move : moves){
-	    int newTempBoard = tempBoard;
-	    newTempBoard[next_move[0]][next_move[1]] = player;
-	    int[][] next_possible_moves = getPossibleMoves(tempBoard);
-	    int other_player = (player % 2) + 1;
-	    if (nextBestMove(next_possible_moves, other_player, newTempBoard)[2] < ans)
+    
+    
+    /* returns the max of 2 moves. move1[0] = r position move1[1] = c position move1[2] = value */
+    
 
-    int[][] ans = new int[num_moves][2];
-    int temp = 0;
-    for (int r = 0; r < 3; r++){
-	for (int c = 0; c < 3; c++){
-	    if (infoBoard.canMove(r, c)){
-		num_moves[temp][0] = r;
-		num_moves[temp++][1] = c;
-	    }
-	}
+    private int max(int move1, int move2){
+        if (move1 > move2) {
+            return move1;
+        }
+        return move2;
     }
-    return ans;
-}
+
+    private int[] nextBestMove(){
+       int[][] next_possible_moves = getPossibleMoves(infoBoard.getIntArray());
+        int[] ans = new int[2];
+        ans[0] = -1;
+        ans[1] = -1;
+        int bestValue = -1000;
+        int other_player = (team % 2 ) + 1;
+        for (int[] move : next_possible_moves){
+            int[][] tempInfoBoard = infoBoard.getIntArray();;
+            tempInfoBoard[move[0]][move[1]] = team;
+            if (isWinner(tempInfoBoard, team)){
+                ans = move;
+                break;
+            }
+            if (0 - nextBestMoveHelper(other_player, tempInfoBoard) >= bestValue){
+                bestValue = 0 - nextBestMoveHelper(other_player, tempInfoBoard);
+                ans = move;
+            }
+        } 
+        return ans;
+    }
+    
+    public int[][] getCopy(int[][] original){
+        int[][] ans = new int[original.length][original.length];
+        for (int r = 0; r < original.length; r++){
+            for (int c = 0 ; c < original.length; c++){
+                ans[r][c] = original[r][c];
+        }   
+        }
+        return ans;
+    }
+    
+    private int nextBestMoveHelper(int player, int[][] tempBoard){
+        numcalcs++;
+        int[][] next_possible_moves = getPossibleMoves(tempBoard);
+	if (next_possible_moves.length == 0)
+            return 0;
+        int bestValue = -1000;
+        int other_player = (player % 2) + 1;
+        for (int[] move : next_possible_moves){
+            int[][] tempInfoBoard = getCopy(tempBoard);
+            tempInfoBoard[move[0]][move[1]] = player;
+            if (isWinner(tempInfoBoard, player)){
+                return 1000;
+            }
+            bestValue = max(bestValue, 0 - nextBestMoveHelper(other_player, tempInfoBoard));
+        }
+        return bestValue;
+    }
+
 
 
 		
