@@ -81,50 +81,51 @@ public class Connect4Board {
     }
    
     public boolean hasWinner(){
-	boolean status = false;
+	boolean ans = false;
 	// check for a horizontal win
-	for (int row=0; row<6; row++) {
-	    for (int column=0; column<4; column++) {
-		if (grid[column][row] != 0 &&
-		    grid[column][row] == grid[column+1][row] &&
-		    grid[column][row] == grid[column+2][row] &&
-		    grid[column][row] == grid[column+3][row]) {
-		    status = true;
+	for (int r=0; r<6; r++) {
+	    for (int c=0; c<4; c++) {
+		if (grid[c][r] != 0 &&
+		    grid[c][r] == grid[c+1][r] &&
+		    grid[c][r] == grid[c+2][r] &&
+		    grid[c][r] == grid[c+3][r]) {
+		    ans = true;
 		}
 	    }
 	}
 	// check for a vertical win
-	for (int row=0; row<3; row++) {
-	    for (int column=0; column<7; column++) {
-		if (grid[column][row] != 0 &&
-		    grid[column][row] == grid[column][row+1] &&
-		    grid[column][row] == grid[column][row+2] &&
-		    grid[column][row] == grid[column][row+3]) {
-		    status = true;
+	for (int r=0; r<3; r++) {
+	    for (int c=0; c<7; c++) {
+		if (grid[c][r] != 0 &&
+		    grid[c][r] == grid[c][r+1] &&
+		    grid[c][r] == grid[c][r+2] &&
+		    grid[c][r] == grid[c][r+3]) {
+		    ans = true;
 		}
 	    }
 	}
 	// check for a diagonal win (positive slope)
-	for (int row=0; row<3; row++) {
-	    for (int column=0; column<4; column++) {
-		if (grid[column][row] != 0 &&
-		    grid[column][row] == grid[column+1][row+1] &&
-		    grid[column][row] == grid[column+2][row+2] &&
-		    grid[column][row] == grid[column+3][row+3]) {
-		    status = true;
+	for (int r=0; r<3; r++) {
+	    for (int c=0; c<4; c++) {
+		if (grid[c][r] != 0 &&
+		    grid[c][r] == grid[c+1][r+1] &&
+		    grid[c][r] == grid[c+2][r+2] &&
+		    grid[c][r] == grid[c+3][r+3]) {
+		    ans = true;
 		}
 	    }
 	}
 	// check for a diagonal win (negative slope)
-	for (int row=3; row<6; row++) {
-	    for (int column=0; column<4; column++) {
-		if (grid[column][row] != 0 &&
-		    grid[column][row] == grid[column+1][row-1] &&
-		    grid[column][row] == grid[column+2][row-2] &&
-		    grid[column][row] == grid[column+3][row-3]) {
-		    status = true;
+	for (int r=3; r<6; r++) {
+	    for (int c=0; c<4; c++) {
+		if (grid[c][r] != 0 &&
+		    grid[c][r] == grid[c+1][r-1] &&
+		    grid[c][r] == grid[c+2][r-2] &&
+		    grid[c][r] == grid[c+3][r-3]) {
+		    ans = true;
 		}
 	    }
+            return ans;
 	}
 
 
