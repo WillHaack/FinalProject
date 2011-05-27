@@ -1,7 +1,7 @@
 import java.awt.Color;
 import wheels.users.*;
 
-public class TetrisBoard extends Frame{
+public class TetrisBoard{
   
   private Rectangle background;
   private Line v1, v2, v3, v4, v5, v6, v7, v8, v9, h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19;
@@ -94,15 +94,6 @@ public class TetrisBoard extends Frame{
     h17.setPoints(235,411,465,411);
     h18.setPoints(235,434,465,434);
     h19.setPoints(235,457,465,457);    
-    TetrisDriver x = new TetrisDriver();
-    x.addPiece();
-    //Wait.wait(500);
-    x.movePiece();
-    x.display();
-  }
-  
-  public static void main(String[]args){
-    TetrisBoard app = new TetrisBoard();
   }
 }
   
