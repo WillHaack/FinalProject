@@ -5,7 +5,7 @@ public class Block{
 
   private boolean isFalling;
   private String type;
-  private int part, row, col;
+  private int part, row, col, stage;
   private TetrisDriver board;
   
   public Block(int r, int c, String kind, int z){
@@ -15,6 +15,7 @@ public class Block{
     type = kind;
     part = z;
     isFalling = true;
+    stage = 1;
   }
   
   public boolean canMove(){
@@ -25,8 +26,33 @@ public class Block{
     isFalling = false;
   }
   
+  public void setPart(int x){
+    part = x;
+  }
+  
+  public int getStage(){
+    return stage;
+  }
+  
+  public void rotate(){
+    if (type.equals("L") || type.equals("J") || type.equals("T")){
+      stage++;
+      if (stage >= 5)
+        stage = 1;
+    }
+    else if (!type.equals("O")){
+      stage++;
+      if (stage >= 3)
+        stage = 1;
+    }
+  }
+  
   public void fall(){
     isFalling = true;
+  }
+  
+  public int getPart(){
+    return part;
   }
   
   public String getType(){
@@ -63,6 +89,13 @@ public class Block{
   
   public boolean canMoveRight(){
     return col!= 9;
+  }
+  
+  public void setLocation(Block[][] board, int r, int c){
+    board[r][c] = this;
+    board[row][col] = null;
+    row = r;
+    col = c;
   }
   
 }
