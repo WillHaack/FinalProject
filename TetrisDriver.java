@@ -137,6 +137,15 @@ public class TetrisDriver{
     }
   }
   
+  public void align(){
+    for (int i = 0; i < 4; i++)
+      piece[i].setLocation(board,piece[i].getRow()+1,piece[i].getCol()+1);
+    for (int i = 0; i < 4; i++)
+      piece[i].setLocation(board,piece[i].getRow()-2,piece[i].getCol()-2);
+    for (int i = 0; i < 4; i++)
+      piece[i].setLocation(board,piece[i].getRow()+1,piece[i].getCol()+1);
+  }
+  
   public void movePieceRight(){
     boolean canMove = true;
     for (int i = 0; i < 4; i++){
@@ -175,7 +184,7 @@ public class TetrisDriver{
       if (cur.getType().equals("S")){
         if (cur.getStage() == 1){
           if (cur.getPart()== 1)
-            cur.setLocation(board,cur.getRow(),cur.getCol() + 1);
+            cur.setLocation(board,cur.getRow(),cur.getCol()+1);
           else if (cur.getPart()== 2)
             cur.setLocation(board,cur.getRow()-1,cur.getCol());
           else if (cur.getPart()== 3)
@@ -185,9 +194,9 @@ public class TetrisDriver{
         else{
           if (cur.getPart()== 1)
             cur.setLocation(board,cur.getRow(),cur.getCol() - 1);
-          if (cur.getPart()== 2)
+          else if (cur.getPart()== 2)
             cur.setLocation(board,cur.getRow()+1,cur.getCol());
-          if (cur.getPart()== 3)
+          else if (cur.getPart()== 3)
             cur.setLocation(board,cur.getRow(),cur.getCol() + 1);
           else cur.setLocation(board,cur.getRow()+1,cur.getCol() + 2);
         }
@@ -196,18 +205,18 @@ public class TetrisDriver{
         if (cur.getStage() == 1){
           if (cur.getPart()== 1)
             cur.setLocation(board,cur.getRow() -1, cur.getCol());
-          if (cur.getPart()== 2)
+          else if (cur.getPart()== 2)
             cur.setLocation(board,cur.getRow(), cur.getCol() - 1);
-          if (cur.getPart()== 3)
+          else if (cur.getPart()== 3)
             cur.setLocation(board,cur.getRow() - 1, cur.getCol() + 2);
           else cur.setLocation(board,cur.getRow(), cur.getCol() + 1);
         }
         else{
           if (cur.getPart()== 1)
             cur.setLocation(board,cur.getRow()+1,cur.getCol());
-          if (cur.getPart()== 2)
+          else if (cur.getPart()== 2)
             cur.setLocation(board,cur.getRow(),cur.getCol() - 1);
-          if (cur.getPart()== 3)
+          else if (cur.getPart()== 3)
             cur.setLocation(board,cur.getRow() - 1, cur.getCol() + 2);
           else cur.setLocation(board,cur.getRow(), cur.getCol() + 1);
         }
@@ -239,12 +248,17 @@ public class TetrisDriver{
     for (int i = 0; i < 20; i++){
         for (int j = 0; j < 10; j++){
           if (board[i][j] == null)
-            System.out.print("_");
-          else System.out.print(board[i][j].getPart());
+            System.out.print("_ ");
+          else System.out.print(board[i][j].getPart() + " " + i + "," + j + " ");
         }
         System.out.println();
       }
     }
+  
+  public void printPiece(){
+    for (int i = 0; i < 4; i++)
+      System.out.println(piece[i].getPart() + " ");
+  }
     
     public void display(){
       for (int i = 0; i < 20; i++){
