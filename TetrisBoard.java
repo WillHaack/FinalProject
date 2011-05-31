@@ -94,6 +94,24 @@ public class TetrisBoard{
     h17.setPoints(235,411,465,411);
     h18.setPoints(235,434,465,434);
     h19.setPoints(235,457,465,457);    
+<<<<<<< HEAD
+    TetrisDriver x = new TetrisDriver();
+    x.addPiece();
+    x.print();
+    System.out.println();
+    //xx.display();
+    //Wait.wait(500);
+    x.move();
+    x.move();
+    x.move();
+    x.print();
+    x.display();
+  }
+  
+  public static void main(String[]args){
+    TetrisBoard app = new TetrisBoard();
+=======
+>>>>>>> 56ce63cb51b33a66c6e6c72675c90b9e2dffd58e
   }
 }
   
