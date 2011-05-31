@@ -16,10 +16,17 @@ public class Tetris extends Frame{
       d.print();
       System.out.println();
       d.rotate();
+      d.align();
+      d.display();
+      Thread.sleep(300);
+      /*d.print();
+      Thread.sleep(500);*/
+      d.movePiece();
       d.display();
       d.print();
-      Thread.sleep(2000);
+      Thread.sleep(500);
       d.rotate();
+      d.align();
       d.display();
       System.out.println();
       d.print();
@@ -29,6 +36,7 @@ public class Tetris extends Frame{
         d.movePiece();
         d.display();
       }
+      d.printPiece();
     }
     
     public static void main(String[]args) throws java.lang.InterruptedException{
