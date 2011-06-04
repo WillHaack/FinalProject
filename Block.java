@@ -92,8 +92,8 @@ public class Block{
   }
   
   public void setLocation(Block[][] board, int r, int c){
-    board[r][c] = this;
     board[row][col] = null;
+    board[r][c] = this;
     row = r;
     col = c;
   }
