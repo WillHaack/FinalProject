@@ -1,22 +1,53 @@
-import wheels.users.*;
+
 import java.awt.Color;
 import java.util.*;
 import java.util.ArrayList;
-
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class FallDownBoard{
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+import javax.swing.Timer;
+
+public class FallDownBoard extends JPanel implements ActionListener{
     private int[][] _spaces;
     private ArrayList<String> _patterns;
     private FallBall ball;
-    private int _botSpace;
-    private boolean hasStart;
+    private int _botSpace, score, tick, moveFactor;
+    private boolean hasStart, displayGameOver;
 
+    private Image player;
+    private Image platform;
+    private Image clear;
+    private Image splash;
+    private Timer t;    
     
     //0 is empty, 1 is platform, 2 is ball
     public FallDownBoard(int r, int c){
+      addKeyListener(new TAdapter());
+      ImageIcon iib = new ImageIcon(this.getClass().getResource("ball.png"));
+      player = iib.getImage();
+      ImageIcon iip = new ImageIcon(this.getClass().getResource("platform.png"));
+      platform = iip.getImage();
+      ImageIcon iic = new ImageIcon(this.getClass().getResource("clear.png"));
+      clear = iic.getImage();
+      ImageIcon iis = new ImageIcon(this.getClass().getResource("splashscreen.png"));
+      splash = iis.getImage();
+      setBackground(Color.black);
+      setFocusable(true);
+      t = new Timer(100, this);
+      score = 0;
+      tick = 0;
+      moveFactor = 0;
       hasStart = false;
+      displayGameOver = false;
       _spaces = new int[r][c];
       _botSpace = 0;
       _patterns = new ArrayList<String>();
@@ -35,8 +66,10 @@ public class FallDownBoard{
       _patterns.add("000011111111111");
       _patterns.add("111100111110011");
       _patterns.add("001111101111100");
+      fillPlats(3);
       ball = new FallBall(1, c/2);
       _spaces[1][c/2] = 2;
+      t.start();
     }
     
     //freq is every how many rows there should be a platform, this function fills the board with platforms initially
@@ -47,14 +80,6 @@ public class FallDownBoard{
           _spaces[i][x] =Integer.parseInt(_patterns.get(which).substring(x, x+1));
         }
       }
-    }
-    
-    public boolean hasStarted(){
-      return hasStart;
-    }
-    
-    public boolean start(){
-      return !hasStart;
     }
     
     //scrolls the board up a row, and if there have been 2 blank lines updated, it'll add a new platform
@@ -78,23 +103,28 @@ public class FallDownBoard{
       _spaces = update;
     }
     
-    //moves the ball left
-    public void moveLeft(){
-      if (ball.isLeftOpen(_spaces)){
-        _spaces[ball.getRow()][ball.getCol()] = 0;
-        ball.setCol(ball.getCol() - 1);
-        _spaces[ball.getRow()][ball.getCol()] = 2;
+    //moves the ball
+    public void tryMove(){
+      if(moveFactor == -1){
+        if (ball.isLeftOpen(_spaces)){
+          _spaces[ball.getRow()][ball.getCol()] = 0;
+          ball.setCol(ball.getCol() - 1);
+          _spaces[ball.getRow()][ball.getCol()] = 2;
+          moveFactor = 0;
+          repaint();
+        }
+      }
+      else if(moveFactor == 1){
+        if (ball.isRightOpen(_spaces)){
+          _spaces[ball.getRow()][ball.getCol()] = 0;
+          ball.setCol(ball.getCol() + 1);
+          _spaces[ball.getRow()][ball.getCol()] = 2;
+          moveFactor = 0;
+          repaint();
+        }
       }
     }
     
-    //moves the ball right
-    public void moveRight(){
-      if (ball.isRightOpen(_spaces)){
-        _spaces[ball.getRow()][ball.getCol()] = 0;
-        ball.setCol(ball.getCol() + 1);
-        _spaces[ball.getRow()][ball.getCol()] = 2;
-      }
-    }
     
     //moves the ball down
     public void moveDown(){
@@ -113,14 +143,6 @@ public class FallDownBoard{
       }
     }
     
-    public int[][] getBoard(){
-      return _spaces;
-    }
-    
-    public FallBall getBall(){
-      return ball;
-    }
-    
     //Tells whether the ball is still alive
     public boolean isLive(){
       Boolean ans = true;
@@ -130,51 +152,82 @@ public class FallDownBoard{
     }
     
     //x, and y are the starting positions, size denotes 1 side of the square pixel
-    public void display(int x, int y, int size){
-      Rectangle background = new Rectangle(Color.black);
-      background.setLocation(210,20);
-      background.setSize(270,450); 
-      for (int r = 0; r < _spaces.length; r++){
-        for(int c = 0; c < _spaces[0].length; c++){
-          if(_spaces[r][c] == 1){
-            Rectangle plat = new Rectangle(x + size * c,y + size * r);
-            plat.setColor(Color.green);
-            plat.setSize(size,size);
+    public void paint(Graphics g){
+      super.paint(g);
+      g.drawImage(clear, 0, 0, this);
+      if(hasStart){
+        for (int r = 0; r < _spaces.length; r++){
+          for(int c = 0; c < _spaces[0].length; c++){
+            if(_spaces[r][c] == 1){
+              g.drawImage(platform, c * 18, r * 18, this);
+            }
+            else if(_spaces[r][c] == 2){
+              g.drawImage(player, c * 18, r * 18, this);
+            }
           }
-          else if(_spaces[r][c] == 2){
-            Ellipse circ = new Ellipse(x + size * c,y + size * r);
-            circ.setSize(size,size);
-            circ.setColor(Color.red);
-            circ.setFrameColor(Color.black);
-          }
+        }
+      }
+      else if(displayGameOver == true){
+        gameOver(g);
+      }
+      else{
+        intro(g);
+      }
+    }
+    
+    public void intro(Graphics g){
+      g.drawImage(splash, 0, 0, this);
+    }
+    
+    public void gameOver(Graphics g){
+      g.drawImage(clear, 0, 0, this);
+      String msg = "GAME OVER: Your score was: " + score;
+      Font small = new Font("Helvetica", Font.BOLD, 14);
+      FontMetrics metr = this.getFontMetrics(small);
+      g.setColor(Color.white);
+      g.setFont(small);
+      g.drawString(msg, (270 - metr.stringWidth(msg)) / 2, 225);
+    }
+      
+    public void actionPerformed(ActionEvent arg0){
+      if (ball.getRow() == 0 || ball.getRow() == _spaces.length - 1){
+        hasStart = false;
+        displayGameOver = true;
+        repaint();
+        t.stop();
+      }
+      if(hasStart){
+        tick++;
+        score++;
+        if(tick % 5 == 0){
+          tryMove();
+          moveUpBoard();
+          moveDown();
+          repaint();
+        }
+        else{
+          tryMove();
+          moveDown();
+          repaint();
         }
       }
     }
     
-    public void keyPressed (KeyEvent ke) {
-      switch (ke.getKeyCode()){
-        case KeyEvent.VK_LEFT:
-          moveLeft();
-          break;
-        case KeyEvent.VK_RIGHT:
-          moveRight();
-          break;
+    private class TAdapter extends KeyAdapter{
+      public void keyPressed(KeyEvent e){
+        int keycode = e.getKeyCode();
+        if(hasStart == false){
+          if(keycode == KeyEvent.VK_LEFT)
+            hasStart = true;
+          if(keycode == KeyEvent.VK_RIGHT)
+            hasStart = true;
+        }
+        if(keycode == KeyEvent.VK_LEFT)
+          moveFactor = -1;
+        if(keycode == KeyEvent.VK_RIGHT)
+          moveFactor = 1;
+        }
       }
-    }
     
-    public static void main(String args[]){
-      FallDownBoard q = new FallDownBoard(25,15);
-      q.fillPlats(3);
-      q.printBoard();
-      System.out.println();
-      q.moveUpBoard();
-      q.printBoard();
-      System.out.println();
-      q.moveUpBoard();
-      q.printBoard();
-      System.out.println();
-      q.moveUpBoard();
-      q.printBoard();
-    }
+    
 }
-    
