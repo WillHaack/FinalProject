@@ -2,7 +2,7 @@ import java.awt.Color;
 import wheels.users.*;
 
 public class Block{
-
+  
   private boolean isFalling;
   private String type;
   private int part, row, col, stage;
@@ -98,5 +98,7 @@ public class Block{
     col = c;
   }
   
+  public boolean canMove(Block[][] board, int r, int c){
+    return board[r][c] == null && r >= 0 && r <= 19 && c >= 0 && c <= 9;
+  }
 }
-      
