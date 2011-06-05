@@ -1,3 +1,5 @@
+//This is unneeded now.  See FallDown.java, and FallDownBoard.java for the game.
+
 import java.awt.Color;
 import wheels.users.*;
 import java.awt.event.KeyAdapter;
